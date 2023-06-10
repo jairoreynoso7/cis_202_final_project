@@ -1,0 +1,105 @@
+#include <iostream>
+#include <vector>
+#include <algorithm>
+
+using namespace std;
+
+class Mountain {
+private:
+    string name;
+    string country;
+    double elevation;
+
+public:
+     Mountain(string name, string country, double elevation){
+        this->name = name;
+        this->country = country;
+        this->elevation = elevation;
+     }
+
+
+    void setName(string userName) {
+        this->name = userName;
+    }
+
+    string getName() {
+        return name;
+    }
+
+    void setCountry(string UserCountry) {
+        this->country = country;
+    }
+
+    string getCountry() {
+        return country;
+    }
+
+    void setElevation(double userElevation) {
+        this->elevation = userElevation;
+    }
+
+    double getElevation() {
+        return elevation;
+    }
+
+    double toMeters() {
+        return elevation / 3.2808;
+    }
+};
+
+double minElevation(vector<Mountain> m) {
+    double min = m[0].getElevation();
+    
+    for (unsigned int i = 1; i < m.size(); ++i) {
+        if (m.at(i).getElevation() < min) {
+            min = m.at(i).getElevation();
+        }
+    }
+    return min;
+}
+
+int main() {
+    vector<Mountain> m;
+
+    // Create instances of Mountain objects
+    Mountain m1("Chimborazo", "Ecuador", 20549);
+    Mountain m2("Matterhorn", "Switzerland", 14692);
+    Mountain m3("Olympus", "Greece (Macedonia)", 9573);
+    Mountain m4("Everest", "Nepal", 29029);
+    Mountain m5("Mount Marcy - Adirondacks", "United States", 5344);
+    Mountain m6("Mount Mitchell - Blue Ridge", "United States", 6684);
+    Mountain m7("Zugspitze", "Switzerland", 9719);
+
+    // Add Mountain objects to the vector
+    m.push_back(m1);
+    m.push_back(m2);
+    m.push_back(m3);
+    m.push_back(m4);
+    m.push_back(m5);
+    m.push_back(m6);
+    m.push_back(m7);
+
+    // Print out Mountain details
+    for (size_t i = 0; i < m.size(); ++i) {
+        Mountain mountain = m[i];
+        cout << "Name: " << mountain.getName() << endl;
+        cout << "Country: " << mountain.getCountry() << endl;
+        cout << "Elevation (feet): " << mountain.getElevation() << endl;
+        cout << "Elevation (meters): " << mountain.toMeters() << endl;
+        cout << endl;
+    }
+
+    // Find and print the shortest mountain
+    double minElev = minElevation(m);
+    for (size_t i = 0; i < m.size(); ++i) {
+        Mountain mountain = m[i];
+        if (mountain.getElevation() == minElev) {
+            cout << "Shortest mountain: " << mountain.getName() << endl;
+            cout << "Elevation (feet): " << mountain.getElevation() << endl;
+            cout << "Elevation (meters): " << mountain.toMeters() << endl;
+            break;
+        }
+    }
+
+  return 0;
+}
